@@ -1,0 +1,47 @@
+{
+  "name": "omnifocus-sync-mcp",
+  "version": "0.1.0",
+  "description": "Headless MCP server that reads and writes OmniFocus data directly from the Omni Sync Server (WebDAV + OmniFileStore end-to-end encryption), with no Mac app required.",
+  "type": "module",
+  "bin": {
+    "omnifocus-sync-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "node --import tsx --test test/*.test.ts",
+    "probe": "tsx src/cli.ts"
+  },
+  "keywords": [
+    "omnifocus",
+    "mcp",
+    "model-context-protocol",
+    "webdav",
+    "omni-sync-server",
+    "gtd"
+  ],
+  "author": "Ross Kukulinski",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "fast-xml-parser": "^4.5.0",
+    "fflate": "^0.8.2",
+    "plist": "^3.1.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/plist": "^3.0.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

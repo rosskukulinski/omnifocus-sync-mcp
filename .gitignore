@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+.env
+.env.local
+.DS_Store
+# Never commit a decrypted database dump or credentials
+*.ofocus/
+dump/
+scratch/
