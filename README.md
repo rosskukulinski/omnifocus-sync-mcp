@@ -9,10 +9,11 @@ Every other OmniFocus MCP server automates the local macOS app via AppleScript/J
 This one speaks the cloud sync protocol instead, which is what lets it run headless.
 
 > ⚠️ **Alpha / use at your own risk.** This talks to your real task database. The
-> encryption and parsing are covered by an offline test suite, but the *write* path
-> has not been battle-tested against every OmniFocus version. **Test against a
-> throwaway Omni account first, and keep a backup** (in OmniFocus: File → Back Up
-> Database). See [Safety](#safety).
+> read and write paths have been validated end-to-end against a live Omni Sync
+> Server account (add + delete transactions round-trip correctly), and the crypto
+> and parsing have an offline test suite — but this hasn't been exercised across
+> every OmniFocus version or edge case. **Keep a backup** (in OmniFocus: File → Back
+> Up Database), and consider a throwaway account while evaluating. See [Safety](#safety).
 
 ## How it works
 
@@ -108,6 +109,7 @@ Run over stdio. Example Claude Desktop / Claude Code config:
 | `of_add_task` | Create a task (inbox or in a project) |
 | `of_complete_task` | Mark a task complete |
 | `of_edit_task` | Edit name/note/flag/due/defer; clear dates |
+| `of_delete_task` | Delete a task by id |
 
 ## Safety
 
