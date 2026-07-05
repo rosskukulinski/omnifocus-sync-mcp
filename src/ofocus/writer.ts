@@ -120,6 +120,11 @@ export function buildUpdateTask(id: string, fields: UpdateTaskFields): string {
   return wrap([lines.join("\n  ")]);
 }
 
+/** Build an op="delete" transaction removing an object by id. */
+export function buildDeleteTask(id: string): string {
+  return wrap([`<task id="${id}" op="delete"/>`]);
+}
+
 export interface ClientInfo {
   clientId: string;
   hostId: string;

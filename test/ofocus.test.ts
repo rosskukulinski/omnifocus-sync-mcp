@@ -4,7 +4,7 @@ import crypto from "node:crypto";
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
 import { DocumentKey, SlotType, decryptFile, encryptFile } from "../src/crypto/index.js";
 import { Database } from "../src/ofocus/database.js";
-import { buildAddTask, buildUpdateTask } from "../src/ofocus/writer.js";
+import { buildAddTask, buildUpdateTask, buildDeleteTask } from "../src/ofocus/writer.js";
 import { OmniFocusStore } from "../src/ofocus/store.js";
 import { parseDigestChallenge, buildDigestAuth } from "../src/webdav/digest.js";
 
@@ -57,6 +57,15 @@ test("clearing a date via empty element", () => {
   assert.ok(db.tasks.get(id)!.due);
   db.applyTransaction(buildUpdateTask(id, { due: null }));
   assert.equal(db.tasks.get(id)!.due, null);
+});
+
+test("op=delete removes the task", () => {
+  const { xml, id } = buildAddTask({ name: "Ephemeral" });
+  const db = new Database();
+  db.applyTransaction(xml);
+  assert.ok(db.tasks.has(id));
+  db.applyTransaction(buildDeleteTask(id));
+  assert.ok(!db.tasks.has(id));
 });
 
 test("full encrypted store read pipeline: zip -> encrypt -> decrypt -> unzip -> parse", () => {

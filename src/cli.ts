@@ -59,8 +59,13 @@ async function main() {
       console.log(`Completed ${rest[0]}`);
       break;
     }
+    case "delete": {
+      await service.deleteTask(rest[0]);
+      console.log(`Deleted ${rest[0]}`);
+      break;
+    }
     default:
-      console.error("Unknown command. Try: sync | list | projects | add | complete");
+      console.error("Unknown command. Try: sync | list | projects | add | complete | delete");
       process.exit(1);
   }
 }

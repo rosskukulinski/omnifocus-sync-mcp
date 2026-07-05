@@ -226,6 +226,23 @@ async function main(): Promise<void> {
     },
   );
 
+  server.registerTool(
+    "of_delete_task",
+    {
+      title: "Delete an OmniFocus task",
+      description: "Permanently delete a task by id (writes an op=delete transaction).",
+      inputSchema: { id: z.string() },
+    },
+    async ({ id }) => {
+      try {
+        await service.deleteTask(id);
+        return jsonResult({ ok: true, id, deleted: true });
+      } catch (e) {
+        return errorResult(e);
+      }
+    },
+  );
+
   const transport = new StdioServerTransport();
   await server.connect(transport);
   // stdout is the JSON-RPC channel; all logging must go to stderr.

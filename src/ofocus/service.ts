@@ -8,6 +8,7 @@ import {
   AddTaskInput,
   buildAddTask,
   buildClientPlist,
+  buildDeleteTask,
   buildUpdateTask,
   UpdateTaskFields,
 } from "./writer.js";
@@ -153,5 +154,12 @@ export class OmniFocusService {
     if (!task) throw new Error(`No task with id ${id}`);
     const xml = buildUpdateTask(id, { ...fields, added: task.added });
     await this.commit(xml);
+  }
+
+  async deleteTask(id: string): Promise<void> {
+    this.assertWritable();
+    const loaded = await this.loaded();
+    if (!loaded.db.tasks.get(id)) throw new Error(`No task with id ${id}`);
+    await this.commit(buildDeleteTask(id));
   }
 }
