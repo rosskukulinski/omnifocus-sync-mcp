@@ -147,7 +147,8 @@ export class WebDavClient {
       const href = decodeURIComponent(hrefRaw);
       const propstat = Array.isArray(resp.propstat) ? resp.propstat[0] : resp.propstat;
       const prop = propstat?.prop ?? {};
-      const isCollection = prop.resourcetype != null && "collection" in (prop.resourcetype ?? {});
+      const rt = prop.resourcetype;
+      const isCollection = !!rt && typeof rt === "object" && "collection" in rt;
       const lenRaw = prop.getcontentlength;
       const contentLength = lenRaw != null ? Number(lenRaw) : undefined;
       const path = href.replace(/\/+$/, "");
